@@ -1,0 +1,16 @@
+{
+  "name": "iching",
+  "version": "0.0.0",
+  "description": "I-Ching",
+  "main": "index.js",
+  "author": "beamed-world <beamed.world@gmail.com>",
+  "scripts": {
+    "start": "node start.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "chokidar": "^1.6.1",
+    "livereload": "^0.6.2",
+    "node-static": "^0.7.9"
+  }
+}
