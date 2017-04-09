@@ -34,11 +34,13 @@ changeHandler()
 
 function changeHandler() {
   console.log('Building Elm code')
-  child_process.exec(`elm make ${ELM_MAIN} --output ${ELM_JS_OUTPUT}`, buildHandler)
+  const command = `elm make ${ELM_MAIN} --output ${ELM_JS_OUTPUT}`
+  child_process.exec(command, buildHandler)
 }
 
 function buildHandler(error, stdout, stderr) {
   if (error) {
+    console.log(stderr.toString())
     return
   }
   console.log(stdout.toString())

@@ -5,6 +5,8 @@ import Json.Decode as Decode exposing (Decoder)
 import Svg exposing (Svg, svg, rect)
 import Svg.Attributes exposing (fill, width, height, viewBox, x, y)
 import Http
+import Window
+import Task
 
 
 -- MAIN
@@ -39,22 +41,81 @@ type alias IChing =
 
 type alias Model =
     { iChing : IChing
+    , size : Window.Size
+    , bar_height : Int
+    , bar_width : Int
+    , hexagram_height : Int
+    , hexagram_width : Int
     }
+
+
+{-| The y-size of the bar
+-}
+bar_height : Int
+bar_height =
+    10
+
+
+{-| The x-size of the bar
+-}
+bar_width : Int
+bar_width =
+    bar_height * 6 * 2
+
+
+{-| The y-size of the hexagram
+-}
+hexagram_height : Int
+hexagram_height =
+    bar_height * 2 * 8
+
+
+{-| The x-size of the hexagram
+-}
+hexagram_width : Int
+hexagram_width =
+    bar_height * 2 * 8
 
 
 iChingURL : String
 iChingURL =
-    "https://raw.githubusercontent.com/la11111/willie-modules/master/texts_iching/iching.json"
+    "iching.json"
 
 
 init : ( Model, Cmd Message )
 init =
     let
-        effects =
-            Http.get iChingURL iChingDecoder
+        getIChing : Cmd Message
+        getIChing =
+            iChingDecoder
+                |> Http.get iChingURL
                 |> Http.send ReceiveIChing
+
+        getSize : Cmd Message
+        getSize =
+            Window.size
+                |> Task.perform ReceiveSize
+
+        effects : Cmd Message
+        effects =
+            [ getSize, getIChing ]
+                |> Cmd.batch
+
+        size : Window.Size
+        size =
+            { width = 0, height = 0 }
+
+        initialModel : Model
+        initialModel =
+            { iChing = []
+            , size = size
+            , bar_height = bar_height
+            , bar_width = bar_width
+            , hexagram_height = hexagram_height
+            , hexagram_width = hexagram_width
+            }
     in
-        ( { iChing = [] }, effects )
+        ( initialModel, effects )
 
 
 
@@ -64,6 +125,7 @@ init =
 type Message
     = NoOp
     | ReceiveIChing (Result Http.Error IChing)
+    | ReceiveSize Window.Size
 
 
 
@@ -72,21 +134,45 @@ type Message
 
 update : Message -> Model -> ( Model, Cmd Message )
 update message model =
-    case message of
+    (case message of
         ReceiveIChing result ->
-            case result of
-                Ok iChing ->
-                    { model | iChing = iChing } ! []
+            receiveIChing result
 
-                Err error ->
-                    let
-                        _ =
-                            Debug.log "error fetching iChing" (error)
-                    in
-                        model ! []
+        ReceiveSize size ->
+            receiveSize size
 
-        _ ->
-            model ! []
+        NoOp ->
+            let
+                _ =
+                    break_elm ()
+            in
+                always <| model ! []
+    )
+        |> apply model
+
+
+apply : a -> (a -> b) -> b
+apply a fn =
+    fn a
+
+
+receiveIChing : Result Http.Error IChing -> Model -> ( Model, Cmd Message )
+receiveIChing result model =
+    case result of
+        Ok iChing ->
+            { model | iChing = iChing } ! []
+
+        Err error ->
+            let
+                _ =
+                    Debug.log "error fetching iChing" (error)
+            in
+                model ! []
+
+
+receiveSize : Window.Size -> Model -> ( Model, Cmd Message )
+receiveSize size model =
+    { model | size = size } ! []
 
 
 iChingDecoder : Decoder IChing
@@ -107,7 +193,7 @@ pattern2hexagram pattern =
         pattern ->
             let
                 _ =
-                    Debug.log "Invalid patter" (pattern)
+                    Debug.log "Invalid pattern" (pattern)
             in
                 ( Broken, Broken, Broken, Broken, Broken, Broken )
 
@@ -145,7 +231,7 @@ string2bar string =
 
 subscriptions : Model -> Sub Message
 subscriptions model =
-    Sub.none
+    Window.resizes ReceiveSize
 
 
 
@@ -161,59 +247,117 @@ view model =
 
 viewHexagrams : Model -> Html Message
 viewHexagrams model =
-    model.iChing
-        |> List.indexedMap viewHexagram
-        |> svg [ width "1280", height "1280" ]
+    let
+        width_ : Svg.Attribute Message
+        width_ =
+            hexagram_width
+                * 8
+                |> toString
+                |> width
+
+        height_ : Svg.Attribute Message
+        height_ =
+            hexagram_height
+                * 8
+                |> toString
+                |> height
+    in
+        model.iChing
+            |> List.indexedMap viewHexagram
+            |> svg [ width_, height_ ]
 
 
 viewHexagram : Int -> Hexagram -> Svg Message
 viewHexagram position hexagram =
     let
+        x_ : Svg.Attribute Message
         x_ =
             position
                 % 8
-                |> (*) 160
+                |> (*) hexagram_width
                 |> toString
                 |> x
 
+        y_ : Svg.Attribute Message
         y_ =
             position
                 // 8
-                |> (*) 160
+                |> (*) hexagram_height
                 |> toString
                 |> y
+
+        width_ : Svg.Attribute Message
+        width_ =
+            hexagram_width
+                |> toString
+                |> width
+
+        height_ : Svg.Attribute Message
+        height_ =
+            hexagram_height
+                |> toString
+                |> height
     in
         hexagram
             |> listFrom6tuple
-            |> List.indexedMap viewBar
-            |> svg [ width "160", height "160", x_, y_ ]
+            |> List.indexedMap viewLine
+            |> svg [ width_, height_, x_, y_ ]
 
 
-viewBar : Int -> Line -> Svg Message
-viewBar position bar =
+viewLine : Int -> Line -> Svg Message
+viewLine position bar =
     let
+        y_ : Svg.Attribute Message
         y_ =
             position
-                * 20
+                * 2
+                |> (*) bar_height
                 |> toString
                 |> y
 
-        height_ =
-            height "10"
+        bar_height_ : Svg.Attribute Message
+        bar_height_ =
+            bar_height
+                |> toString
+                |> height
 
+        bar_width_ : Svg.Attribute Message
+        bar_width_ =
+            bar_width
+                |> toString
+                |> width
+
+        broken_bar_width : Svg.Attribute Message
+        broken_bar_width =
+            bar_width
+                // 3
+                |> toString
+                |> width
+
+        x_offset : Svg.Attribute Message
+        x_offset =
+            bar_width
+                // 3
+                |> (*) 2
+                |> toString
+                |> x
+
+        fill_ : Svg.Attribute Message
         fill_ =
             fill "black"
 
+        attributes : List (Svg.Attribute Message)
         attributes =
-            [ width "120", height "10", y_ ]
+            [ bar_height_, bar_width_, y_ ]
 
+        bars : List (Svg Message)
         bars =
             if bar == Unbroken then
-                [ rect [ width "120", height_, fill_ ] []
+                [ rect [ bar_width_, bar_height_, fill_ ] []
                 ]
             else
-                [ rect [ width "40", height_, fill_ ] []
-                , rect [ width "40", height_, fill_, x "80" ] []
+                [ rect [ broken_bar_width, bar_height_, fill_ ] []
+                , rect [ broken_bar_width, bar_height_, fill_, x_offset ] []
                 ]
     in
         svg attributes bars
