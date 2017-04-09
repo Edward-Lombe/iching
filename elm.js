@@ -13252,14 +13252,6 @@ var _user$project$Main$apply = F2(
 	function (a, fn) {
 		return fn(a);
 	});
-var _user$project$Main$iChingURL = 'iching.json';
-var _user$project$Main$bar_height = 10;
-var _user$project$Main$bar_width = (_user$project$Main$bar_height * 6) * 2;
-var _user$project$Main$hexagram_height = (_user$project$Main$bar_height * 2) * 8;
-var _user$project$Main$hexagram_width = (_user$project$Main$bar_height * 2) * 8;
-var _user$project$Main$break_elm = function (a) {
-	return A2(_elm_lang$core$Basics_ops['%'], 1, 0);
-};
 var _user$project$Main$update = F2(
 	function (message, model) {
 		return A2(
@@ -13273,8 +13265,6 @@ var _user$project$Main$update = F2(
 					case 'ReceiveSize':
 						return _user$project$Main$receiveSize(_p6._0);
 					default:
-						var _p7 = _user$project$Main$break_elm(
-							{ctor: '_Tuple0'});
 						return _elm_lang$core$Basics$always(
 							A2(
 								_elm_lang$core$Platform_Cmd_ops['!'],
@@ -13283,6 +13273,11 @@ var _user$project$Main$update = F2(
 				}
 			}());
 	});
+var _user$project$Main$iChingURL = 'iching.json';
+var _user$project$Main$bar_height = 10;
+var _user$project$Main$bar_width = (_user$project$Main$bar_height * 6) * 2;
+var _user$project$Main$hexagram_height = (_user$project$Main$bar_height * 2) * 8;
+var _user$project$Main$hexagram_width = (_user$project$Main$bar_height * 2) * 8;
 var _user$project$Main$Model = F6(
 	function (a, b, c, d, e, f) {
 		return {iChing: a, size: b, bar_height: c, bar_width: d, hexagram_height: e, hexagram_width: f};
@@ -13470,26 +13465,26 @@ var _user$project$Main$view = function (model) {
 };
 var _user$project$Main$Broken = {ctor: 'Broken'};
 var _user$project$Main$string2bar = function (string) {
-	var _p8 = string;
-	switch (_p8) {
+	var _p7 = string;
+	switch (_p7) {
 		case '9':
 			return _user$project$Main$Unbroken;
 		case '6':
 			return _user$project$Main$Broken;
 		default:
-			var _p9 = A2(_elm_lang$core$Debug$log, 'Expected either 6 ot 9, found', _p8);
+			var _p8 = A2(_elm_lang$core$Debug$log, 'Expected either 6 ot 9, found', _p7);
 			return _user$project$Main$Broken;
 	}
 };
 var _user$project$Main$pattern2hexagram = function (pattern) {
-	var _p10 = A2(_elm_lang$core$String$split, '', pattern);
-	if (((((((_p10.ctor === '::') && (_p10._1.ctor === '::')) && (_p10._1._1.ctor === '::')) && (_p10._1._1._1.ctor === '::')) && (_p10._1._1._1._1.ctor === '::')) && (_p10._1._1._1._1._1.ctor === '::')) && (_p10._1._1._1._1._1._1.ctor === '[]')) {
+	var _p9 = A2(_elm_lang$core$String$split, '', pattern);
+	if (((((((_p9.ctor === '::') && (_p9._1.ctor === '::')) && (_p9._1._1.ctor === '::')) && (_p9._1._1._1.ctor === '::')) && (_p9._1._1._1._1.ctor === '::')) && (_p9._1._1._1._1._1.ctor === '::')) && (_p9._1._1._1._1._1._1.ctor === '[]')) {
 		return A2(
 			_user$project$Main$map6tuple,
 			_user$project$Main$string2bar,
-			{ctor: '_Tuple6', _0: _p10._0, _1: _p10._1._0, _2: _p10._1._1._0, _3: _p10._1._1._1._0, _4: _p10._1._1._1._1._0, _5: _p10._1._1._1._1._1._0});
+			{ctor: '_Tuple6', _0: _p9._0, _1: _p9._1._0, _2: _p9._1._1._0, _3: _p9._1._1._1._0, _4: _p9._1._1._1._1._0, _5: _p9._1._1._1._1._1._0});
 	} else {
-		var _p11 = A2(_elm_lang$core$Debug$log, 'Invalid pattern', _p10);
+		var _p10 = A2(_elm_lang$core$Debug$log, 'Invalid pattern', _p9);
 		return {ctor: '_Tuple6', _0: _user$project$Main$Broken, _1: _user$project$Main$Broken, _2: _user$project$Main$Broken, _3: _user$project$Main$Broken, _4: _user$project$Main$Broken, _5: _user$project$Main$Broken};
 	}
 };

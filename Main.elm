@@ -142,11 +142,7 @@ update message model =
             receiveSize size
 
         NoOp ->
-            let
-                _ =
-                    break_elm ()
-            in
-                always <| model ! []
+            always <| model ! []
     )
         |> apply model
 
