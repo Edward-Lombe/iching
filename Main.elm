@@ -46,6 +46,8 @@ type alias Model =
     , line_width : Int
     , hexagram_height : Int
     , hexagram_width : Int
+    , rows : Int
+    , columns : Int
     }
 
 
@@ -57,6 +59,12 @@ iChingURL =
 init : ( Model, Cmd Message )
 init =
     let
+        rows =
+            8
+
+        columns =
+            8
+
         line_height : Int
         line_height =
             10
@@ -101,6 +109,8 @@ init =
             , line_width = line_width
             , hexagram_height = hexagram_height
             , hexagram_width = hexagram_width
+            , rows = rows
+            , columns = columns
             }
     in
         ( initialModel, effects )
@@ -162,14 +172,6 @@ receiveIChing result model =
 receiveSize : Window.Size -> Model -> ( Model, Cmd Message )
 receiveSize size model =
     let
-        _ =
-            Debug.log "new sizes"
-                ( newHexagramHeight
-                , newHexagramWidth
-                , newLineHeight
-                , newLineWidth
-                )
-
         base_size =
             if size.height > size.width then
                 size.width
@@ -184,8 +186,7 @@ receiveSize size model =
             )
     in
         { model
-            | size =
-                size
+            | size = size
             , line_height = newLineHeight
             , line_width = newLineWidth
             , hexagram_height = newHexagramHeight
