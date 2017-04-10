@@ -8397,6 +8397,356 @@ var _elm_lang$html$Html$summary = _elm_lang$html$Html$node('summary');
 var _elm_lang$html$Html$menuitem = _elm_lang$html$Html$node('menuitem');
 var _elm_lang$html$Html$menu = _elm_lang$html$Html$node('menu');
 
+var _elm_lang$html$Html_Attributes$map = _elm_lang$virtual_dom$VirtualDom$mapProperty;
+var _elm_lang$html$Html_Attributes$attribute = _elm_lang$virtual_dom$VirtualDom$attribute;
+var _elm_lang$html$Html_Attributes$contextmenu = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$attribute, 'contextmenu', value);
+};
+var _elm_lang$html$Html_Attributes$draggable = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$attribute, 'draggable', value);
+};
+var _elm_lang$html$Html_Attributes$itemprop = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$attribute, 'itemprop', value);
+};
+var _elm_lang$html$Html_Attributes$tabindex = function (n) {
+	return A2(
+		_elm_lang$html$Html_Attributes$attribute,
+		'tabIndex',
+		_elm_lang$core$Basics$toString(n));
+};
+var _elm_lang$html$Html_Attributes$charset = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$attribute, 'charset', value);
+};
+var _elm_lang$html$Html_Attributes$height = function (value) {
+	return A2(
+		_elm_lang$html$Html_Attributes$attribute,
+		'height',
+		_elm_lang$core$Basics$toString(value));
+};
+var _elm_lang$html$Html_Attributes$width = function (value) {
+	return A2(
+		_elm_lang$html$Html_Attributes$attribute,
+		'width',
+		_elm_lang$core$Basics$toString(value));
+};
+var _elm_lang$html$Html_Attributes$formaction = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$attribute, 'formAction', value);
+};
+var _elm_lang$html$Html_Attributes$list = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$attribute, 'list', value);
+};
+var _elm_lang$html$Html_Attributes$minlength = function (n) {
+	return A2(
+		_elm_lang$html$Html_Attributes$attribute,
+		'minLength',
+		_elm_lang$core$Basics$toString(n));
+};
+var _elm_lang$html$Html_Attributes$maxlength = function (n) {
+	return A2(
+		_elm_lang$html$Html_Attributes$attribute,
+		'maxlength',
+		_elm_lang$core$Basics$toString(n));
+};
+var _elm_lang$html$Html_Attributes$size = function (n) {
+	return A2(
+		_elm_lang$html$Html_Attributes$attribute,
+		'size',
+		_elm_lang$core$Basics$toString(n));
+};
+var _elm_lang$html$Html_Attributes$form = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$attribute, 'form', value);
+};
+var _elm_lang$html$Html_Attributes$cols = function (n) {
+	return A2(
+		_elm_lang$html$Html_Attributes$attribute,
+		'cols',
+		_elm_lang$core$Basics$toString(n));
+};
+var _elm_lang$html$Html_Attributes$rows = function (n) {
+	return A2(
+		_elm_lang$html$Html_Attributes$attribute,
+		'rows',
+		_elm_lang$core$Basics$toString(n));
+};
+var _elm_lang$html$Html_Attributes$challenge = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$attribute, 'challenge', value);
+};
+var _elm_lang$html$Html_Attributes$media = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$attribute, 'media', value);
+};
+var _elm_lang$html$Html_Attributes$rel = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$attribute, 'rel', value);
+};
+var _elm_lang$html$Html_Attributes$datetime = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$attribute, 'datetime', value);
+};
+var _elm_lang$html$Html_Attributes$pubdate = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$attribute, 'pubdate', value);
+};
+var _elm_lang$html$Html_Attributes$colspan = function (n) {
+	return A2(
+		_elm_lang$html$Html_Attributes$attribute,
+		'colspan',
+		_elm_lang$core$Basics$toString(n));
+};
+var _elm_lang$html$Html_Attributes$rowspan = function (n) {
+	return A2(
+		_elm_lang$html$Html_Attributes$attribute,
+		'rowspan',
+		_elm_lang$core$Basics$toString(n));
+};
+var _elm_lang$html$Html_Attributes$manifest = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$attribute, 'manifest', value);
+};
+var _elm_lang$html$Html_Attributes$property = _elm_lang$virtual_dom$VirtualDom$property;
+var _elm_lang$html$Html_Attributes$stringProperty = F2(
+	function (name, string) {
+		return A2(
+			_elm_lang$html$Html_Attributes$property,
+			name,
+			_elm_lang$core$Json_Encode$string(string));
+	});
+var _elm_lang$html$Html_Attributes$class = function (name) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'className', name);
+};
+var _elm_lang$html$Html_Attributes$id = function (name) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'id', name);
+};
+var _elm_lang$html$Html_Attributes$title = function (name) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'title', name);
+};
+var _elm_lang$html$Html_Attributes$accesskey = function ($char) {
+	return A2(
+		_elm_lang$html$Html_Attributes$stringProperty,
+		'accessKey',
+		_elm_lang$core$String$fromChar($char));
+};
+var _elm_lang$html$Html_Attributes$dir = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'dir', value);
+};
+var _elm_lang$html$Html_Attributes$dropzone = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'dropzone', value);
+};
+var _elm_lang$html$Html_Attributes$lang = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'lang', value);
+};
+var _elm_lang$html$Html_Attributes$content = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'content', value);
+};
+var _elm_lang$html$Html_Attributes$httpEquiv = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'httpEquiv', value);
+};
+var _elm_lang$html$Html_Attributes$language = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'language', value);
+};
+var _elm_lang$html$Html_Attributes$src = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'src', value);
+};
+var _elm_lang$html$Html_Attributes$alt = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'alt', value);
+};
+var _elm_lang$html$Html_Attributes$preload = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'preload', value);
+};
+var _elm_lang$html$Html_Attributes$poster = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'poster', value);
+};
+var _elm_lang$html$Html_Attributes$kind = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'kind', value);
+};
+var _elm_lang$html$Html_Attributes$srclang = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'srclang', value);
+};
+var _elm_lang$html$Html_Attributes$sandbox = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'sandbox', value);
+};
+var _elm_lang$html$Html_Attributes$srcdoc = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'srcdoc', value);
+};
+var _elm_lang$html$Html_Attributes$type_ = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'type', value);
+};
+var _elm_lang$html$Html_Attributes$value = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'value', value);
+};
+var _elm_lang$html$Html_Attributes$defaultValue = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'defaultValue', value);
+};
+var _elm_lang$html$Html_Attributes$placeholder = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'placeholder', value);
+};
+var _elm_lang$html$Html_Attributes$accept = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'accept', value);
+};
+var _elm_lang$html$Html_Attributes$acceptCharset = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'acceptCharset', value);
+};
+var _elm_lang$html$Html_Attributes$action = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'action', value);
+};
+var _elm_lang$html$Html_Attributes$autocomplete = function (bool) {
+	return A2(
+		_elm_lang$html$Html_Attributes$stringProperty,
+		'autocomplete',
+		bool ? 'on' : 'off');
+};
+var _elm_lang$html$Html_Attributes$enctype = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'enctype', value);
+};
+var _elm_lang$html$Html_Attributes$method = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'method', value);
+};
+var _elm_lang$html$Html_Attributes$name = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'name', value);
+};
+var _elm_lang$html$Html_Attributes$pattern = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'pattern', value);
+};
+var _elm_lang$html$Html_Attributes$for = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'htmlFor', value);
+};
+var _elm_lang$html$Html_Attributes$max = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'max', value);
+};
+var _elm_lang$html$Html_Attributes$min = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'min', value);
+};
+var _elm_lang$html$Html_Attributes$step = function (n) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'step', n);
+};
+var _elm_lang$html$Html_Attributes$wrap = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'wrap', value);
+};
+var _elm_lang$html$Html_Attributes$usemap = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'useMap', value);
+};
+var _elm_lang$html$Html_Attributes$shape = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'shape', value);
+};
+var _elm_lang$html$Html_Attributes$coords = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'coords', value);
+};
+var _elm_lang$html$Html_Attributes$keytype = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'keytype', value);
+};
+var _elm_lang$html$Html_Attributes$align = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'align', value);
+};
+var _elm_lang$html$Html_Attributes$cite = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'cite', value);
+};
+var _elm_lang$html$Html_Attributes$href = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'href', value);
+};
+var _elm_lang$html$Html_Attributes$target = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'target', value);
+};
+var _elm_lang$html$Html_Attributes$downloadAs = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'download', value);
+};
+var _elm_lang$html$Html_Attributes$hreflang = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'hreflang', value);
+};
+var _elm_lang$html$Html_Attributes$ping = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'ping', value);
+};
+var _elm_lang$html$Html_Attributes$start = function (n) {
+	return A2(
+		_elm_lang$html$Html_Attributes$stringProperty,
+		'start',
+		_elm_lang$core$Basics$toString(n));
+};
+var _elm_lang$html$Html_Attributes$headers = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'headers', value);
+};
+var _elm_lang$html$Html_Attributes$scope = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$stringProperty, 'scope', value);
+};
+var _elm_lang$html$Html_Attributes$boolProperty = F2(
+	function (name, bool) {
+		return A2(
+			_elm_lang$html$Html_Attributes$property,
+			name,
+			_elm_lang$core$Json_Encode$bool(bool));
+	});
+var _elm_lang$html$Html_Attributes$hidden = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'hidden', bool);
+};
+var _elm_lang$html$Html_Attributes$contenteditable = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'contentEditable', bool);
+};
+var _elm_lang$html$Html_Attributes$spellcheck = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'spellcheck', bool);
+};
+var _elm_lang$html$Html_Attributes$async = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'async', bool);
+};
+var _elm_lang$html$Html_Attributes$defer = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'defer', bool);
+};
+var _elm_lang$html$Html_Attributes$scoped = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'scoped', bool);
+};
+var _elm_lang$html$Html_Attributes$autoplay = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'autoplay', bool);
+};
+var _elm_lang$html$Html_Attributes$controls = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'controls', bool);
+};
+var _elm_lang$html$Html_Attributes$loop = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'loop', bool);
+};
+var _elm_lang$html$Html_Attributes$default = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'default', bool);
+};
+var _elm_lang$html$Html_Attributes$seamless = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'seamless', bool);
+};
+var _elm_lang$html$Html_Attributes$checked = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'checked', bool);
+};
+var _elm_lang$html$Html_Attributes$selected = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'selected', bool);
+};
+var _elm_lang$html$Html_Attributes$autofocus = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'autofocus', bool);
+};
+var _elm_lang$html$Html_Attributes$disabled = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'disabled', bool);
+};
+var _elm_lang$html$Html_Attributes$multiple = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'multiple', bool);
+};
+var _elm_lang$html$Html_Attributes$novalidate = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'noValidate', bool);
+};
+var _elm_lang$html$Html_Attributes$readonly = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'readOnly', bool);
+};
+var _elm_lang$html$Html_Attributes$required = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'required', bool);
+};
+var _elm_lang$html$Html_Attributes$ismap = function (value) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'isMap', value);
+};
+var _elm_lang$html$Html_Attributes$download = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'download', bool);
+};
+var _elm_lang$html$Html_Attributes$reversed = function (bool) {
+	return A2(_elm_lang$html$Html_Attributes$boolProperty, 'reversed', bool);
+};
+var _elm_lang$html$Html_Attributes$classList = function (list) {
+	return _elm_lang$html$Html_Attributes$class(
+		A2(
+			_elm_lang$core$String$join,
+			' ',
+			A2(
+				_elm_lang$core$List$map,
+				_elm_lang$core$Tuple$first,
+				A2(_elm_lang$core$List$filter, _elm_lang$core$Tuple$second, list))));
+};
+var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
+
 var _elm_lang$http$Native_Http = function() {
 
 
@@ -9270,10 +9620,6 @@ var _user$project$Main$receiveSize = F2(
 		var newHexagramWidth = _p4._1;
 		var newLineHeight = _p4._2;
 		var newLineWidth = _p4._3;
-		var _p5 = A2(
-			_elm_lang$core$Debug$log,
-			'new sizes',
-			{ctor: '_Tuple4', _0: newHexagramHeight, _1: newHexagramWidth, _2: newLineHeight, _3: newLineWidth});
 		return A2(
 			_elm_lang$core$Platform_Cmd_ops['!'],
 			_elm_lang$core$Native_Utils.update(
@@ -9283,16 +9629,16 @@ var _user$project$Main$receiveSize = F2(
 	});
 var _user$project$Main$receiveIChing = F2(
 	function (result, model) {
-		var _p6 = result;
-		if (_p6.ctor === 'Ok') {
+		var _p5 = result;
+		if (_p5.ctor === 'Ok') {
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
 				_elm_lang$core$Native_Utils.update(
 					model,
-					{iChing: _p6._0}),
+					{iChing: _p5._0}),
 				{ctor: '[]'});
 		} else {
-			var _p7 = A2(_elm_lang$core$Debug$log, 'error fetching iChing', _p6._0);
+			var _p6 = A2(_elm_lang$core$Debug$log, 'error fetching iChing', _p5._0);
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
 				model,
@@ -9309,12 +9655,12 @@ var _user$project$Main$update = F2(
 			_user$project$Main$apply,
 			model,
 			function () {
-				var _p8 = message;
-				switch (_p8.ctor) {
+				var _p7 = message;
+				switch (_p7.ctor) {
 					case 'ReceiveIChing':
-						return _user$project$Main$receiveIChing(_p8._0);
+						return _user$project$Main$receiveIChing(_p7._0);
 					case 'ReceiveSize':
-						return _user$project$Main$receiveSize(_p8._0);
+						return _user$project$Main$receiveSize(_p7._0);
 					default:
 						return _elm_lang$core$Basics$always(
 							A2(
@@ -9325,16 +9671,16 @@ var _user$project$Main$update = F2(
 			}());
 	});
 var _user$project$Main$iChingURL = 'iching.json';
-var _user$project$Main$Model = F6(
-	function (a, b, c, d, e, f) {
-		return {iChing: a, size: b, line_height: c, line_width: d, hexagram_height: e, hexagram_width: f};
+var _user$project$Main$Model = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {iChing: a, size: b, line_height: c, line_width: d, hexagram_height: e, hexagram_width: f, rows: g, columns: h};
 	});
 var _user$project$Main$Unbroken = {ctor: 'Unbroken'};
 var _user$project$Main$viewLine = F3(
-	function (_p9, position, bar) {
-		var _p10 = _p9;
-		var _p12 = _p10.line_width;
-		var _p11 = _p10.line_height;
+	function (_p8, position, bar) {
+		var _p9 = _p8;
+		var _p11 = _p9.line_width;
+		var _p10 = _p9.line_height;
 		var fill_ = _elm_lang$svg$Svg_Attributes$fill('black');
 		var x_offset = _elm_lang$svg$Svg_Attributes$x(
 			_elm_lang$core$Basics$toString(
@@ -9344,13 +9690,13 @@ var _user$project$Main$viewLine = F3(
 							return x * y;
 						}),
 					2,
-					(_p12 / 3) | 0)));
+					(_p11 / 3) | 0)));
 		var broken_line_width = _elm_lang$svg$Svg_Attributes$width(
-			_elm_lang$core$Basics$toString((_p12 / 3) | 0));
+			_elm_lang$core$Basics$toString((_p11 / 3) | 0));
 		var line_width_ = _elm_lang$svg$Svg_Attributes$width(
-			_elm_lang$core$Basics$toString(_p12));
-		var line_height_ = _elm_lang$svg$Svg_Attributes$height(
 			_elm_lang$core$Basics$toString(_p11));
+		var line_height_ = _elm_lang$svg$Svg_Attributes$height(
+			_elm_lang$core$Basics$toString(_p10));
 		var bars = _elm_lang$core$Native_Utils.eq(bar, _user$project$Main$Unbroken) ? {
 			ctor: '::',
 			_0: A2(
@@ -9420,7 +9766,7 @@ var _user$project$Main$viewLine = F3(
 						function (x, y) {
 							return x * y;
 						}),
-					_p11,
+					_p10,
 					position * 2)));
 		var attributes = {
 			ctor: '::',
@@ -9438,14 +9784,14 @@ var _user$project$Main$viewLine = F3(
 		return A2(_elm_lang$svg$Svg$svg, attributes, bars);
 	});
 var _user$project$Main$viewHexagram = F3(
-	function (_p13, position, hexagram) {
-		var _p14 = _p13;
-		var _p16 = _p14.hexagram_width;
-		var _p15 = _p14.hexagram_height;
+	function (_p12, position, hexagram) {
+		var _p13 = _p12;
+		var _p15 = _p13.hexagram_width;
+		var _p14 = _p13.hexagram_height;
 		var height_ = _elm_lang$svg$Svg_Attributes$height(
-			_elm_lang$core$Basics$toString(_p15));
+			_elm_lang$core$Basics$toString(_p14));
 		var width_ = _elm_lang$svg$Svg_Attributes$width(
-			_elm_lang$core$Basics$toString(_p16));
+			_elm_lang$core$Basics$toString(_p15));
 		var y_ = _elm_lang$svg$Svg_Attributes$y(
 			_elm_lang$core$Basics$toString(
 				A2(
@@ -9453,7 +9799,7 @@ var _user$project$Main$viewHexagram = F3(
 						function (x, y) {
 							return x * y;
 						}),
-					_p15,
+					_p14,
 					(position / 8) | 0)));
 		var x_ = _elm_lang$svg$Svg_Attributes$x(
 			_elm_lang$core$Basics$toString(
@@ -9462,7 +9808,7 @@ var _user$project$Main$viewHexagram = F3(
 						function (x, y) {
 							return x * y;
 						}),
-					_p16,
+					_p15,
 					A2(_elm_lang$core$Basics_ops['%'], position, 8))));
 		return A2(
 			_elm_lang$svg$Svg$svg,
@@ -9485,16 +9831,24 @@ var _user$project$Main$viewHexagram = F3(
 			},
 			A2(
 				_elm_lang$core$List$indexedMap,
-				_user$project$Main$viewLine(_p14),
+				_user$project$Main$viewLine(_p13),
 				_user$project$Main$listFrom6tuple(hexagram)));
 	});
-var _user$project$Main$viewHexagrams = function (_p17) {
-	var _p18 = _p17;
-	var _p19 = _p18;
+var _user$project$Main$viewHexagrams = function (_p16) {
+	var _p17 = _p16;
+	var _p20 = _p17;
+	var _p19 = _p17.hexagram_width;
+	var _p18 = _p17.hexagram_height;
 	var height_ = _elm_lang$svg$Svg_Attributes$height(
-		_elm_lang$core$Basics$toString(_p18.hexagram_height * 8));
+		_elm_lang$core$Basics$toString(
+			function (a) {
+				return a - ((_p18 / 4) | 0);
+			}(_p18 * 8)));
 	var width_ = _elm_lang$svg$Svg_Attributes$width(
-		_elm_lang$core$Basics$toString(_p18.hexagram_width * 8));
+		_elm_lang$core$Basics$toString(
+			function (a) {
+				return a - ((_p19 / 4) | 0);
+			}(_p19 * 8)));
 	return A2(
 		_elm_lang$svg$Svg$svg,
 		{
@@ -9508,13 +9862,45 @@ var _user$project$Main$viewHexagrams = function (_p17) {
 		},
 		A2(
 			_elm_lang$core$List$indexedMap,
-			_user$project$Main$viewHexagram(_p19),
-			_p19.iChing));
+			_user$project$Main$viewHexagram(_p20),
+			_p20.iChing));
 };
 var _user$project$Main$view = function (model) {
+	var eigthHexagramWidth = (model.hexagram_width / 8) | 0;
+	var eigthHexagramHeight = (model.hexagram_height / 8) | 0;
+	var iChingWidth = model.hexagram_width * 8;
+	var widthDifference = (_elm_lang$core$Basics$abs(model.size.width - iChingWidth) / 2) | 0;
+	var iChingHeight = model.hexagram_height * 8;
+	var heightDifference = (_elm_lang$core$Basics$abs(model.size.height - iChingHeight) / 2) | 0;
+	var toPx = function (n) {
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(n),
+			'px');
+	};
+	var top = toPx(heightDifference + eigthHexagramHeight);
+	var left = toPx(widthDifference + eigthHexagramWidth);
+	var styles = _elm_lang$html$Html_Attributes$style(
+		{
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: 'position', _1: 'absolute'},
+			_1: {
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: 'top', _1: top},
+				_1: {
+					ctor: '::',
+					_0: {ctor: '_Tuple2', _0: 'left', _1: left},
+					_1: {ctor: '[]'}
+				}
+			}
+		});
 	return A2(
 		_elm_lang$html$Html$div,
-		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: styles,
+			_1: {ctor: '[]'}
+		},
 		{
 			ctor: '::',
 			_0: _user$project$Main$viewHexagrams(model),
@@ -9523,26 +9909,26 @@ var _user$project$Main$view = function (model) {
 };
 var _user$project$Main$Broken = {ctor: 'Broken'};
 var _user$project$Main$string2line = function (string) {
-	var _p20 = string;
-	switch (_p20) {
+	var _p21 = string;
+	switch (_p21) {
 		case '9':
 			return _user$project$Main$Unbroken;
 		case '6':
 			return _user$project$Main$Broken;
 		default:
-			var _p21 = A2(_elm_lang$core$Debug$log, 'Expected either 6 ot 9, found', _p20);
+			var _p22 = A2(_elm_lang$core$Debug$log, 'Expected either 6 ot 9, found', _p21);
 			return _user$project$Main$Broken;
 	}
 };
 var _user$project$Main$pattern2hexagram = function (pattern) {
-	var _p22 = A2(_elm_lang$core$String$split, '', pattern);
-	if (((((((_p22.ctor === '::') && (_p22._1.ctor === '::')) && (_p22._1._1.ctor === '::')) && (_p22._1._1._1.ctor === '::')) && (_p22._1._1._1._1.ctor === '::')) && (_p22._1._1._1._1._1.ctor === '::')) && (_p22._1._1._1._1._1._1.ctor === '[]')) {
+	var _p23 = A2(_elm_lang$core$String$split, '', pattern);
+	if (((((((_p23.ctor === '::') && (_p23._1.ctor === '::')) && (_p23._1._1.ctor === '::')) && (_p23._1._1._1.ctor === '::')) && (_p23._1._1._1._1.ctor === '::')) && (_p23._1._1._1._1._1.ctor === '::')) && (_p23._1._1._1._1._1._1.ctor === '[]')) {
 		return A2(
 			_user$project$Main$map6tuple,
 			_user$project$Main$string2line,
-			{ctor: '_Tuple6', _0: _p22._0, _1: _p22._1._0, _2: _p22._1._1._0, _3: _p22._1._1._1._0, _4: _p22._1._1._1._1._0, _5: _p22._1._1._1._1._1._0});
+			{ctor: '_Tuple6', _0: _p23._0, _1: _p23._1._0, _2: _p23._1._1._0, _3: _p23._1._1._1._0, _4: _p23._1._1._1._1._0, _5: _p23._1._1._1._1._1._0});
 	} else {
-		var _p23 = A2(_elm_lang$core$Debug$log, 'Invalid pattern', _p22);
+		var _p24 = A2(_elm_lang$core$Debug$log, 'Invalid pattern', _p23);
 		return {ctor: '_Tuple6', _0: _user$project$Main$Broken, _1: _user$project$Main$Broken, _2: _user$project$Main$Broken, _3: _user$project$Main$Broken, _4: _user$project$Main$Broken, _5: _user$project$Main$Broken};
 	}
 };
@@ -9599,13 +9985,17 @@ var _user$project$Main$init = function () {
 	var line_width = (line_height * 2) * 6;
 	var hexagram_height = (line_height * 2) * 8;
 	var hexagram_width = (line_height * 2) * 8;
+	var columns = 8;
+	var rows = 8;
 	var initialModel = {
 		iChing: {ctor: '[]'},
 		size: size,
 		line_height: line_height,
 		line_width: line_width,
 		hexagram_height: hexagram_height,
-		hexagram_width: hexagram_width
+		hexagram_width: hexagram_width,
+		rows: rows,
+		columns: columns
 	};
 	return {ctor: '_Tuple2', _0: initialModel, _1: effects};
 }();

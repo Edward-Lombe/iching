@@ -1,6 +1,7 @@
 module Main exposing (..)
 
 import Html exposing (Html, program)
+import Html.Attributes exposing (style)
 import Json.Decode as Decode exposing (Decoder)
 import Svg exposing (Svg, svg, rect)
 import Svg.Attributes exposing (fill, width, height, x, y)
@@ -317,9 +318,44 @@ subscriptions model =
 
 view : Model -> Html Message
 view model =
-    Html.div []
-        [ viewHexagrams model
-        ]
+    let
+        toPx n =
+            toString n ++ "px"
+
+        iChingHeight =
+            model.hexagram_height * 8
+
+        iChingWidth =
+            model.hexagram_width * 8
+
+        eigthHexagramHeight =
+            model.hexagram_height // 8
+
+        eigthHexagramWidth =
+            model.hexagram_width // 8
+
+        heightDifference =
+            abs (model.size.height - iChingHeight) // 2
+
+        widthDifference =
+            abs (model.size.width - iChingWidth) // 2
+
+        top =
+            toPx (heightDifference + eigthHexagramHeight)
+
+        left =
+            toPx (widthDifference + eigthHexagramWidth)
+
+        styles =
+            [ ( "position", "absolute" )
+            , ( "top", top )
+            , ( "left", left )
+            ]
+                |> style
+    in
+        Html.div [ styles ]
+            [ viewHexagrams model
+            ]
 
 
 viewHexagrams : Model -> Html Message
@@ -329,6 +365,7 @@ viewHexagrams ({ hexagram_height, hexagram_width } as model) =
         width_ =
             hexagram_width
                 * 8
+                |> (\a -> a - (hexagram_width // 4))
                 |> toString
                 |> width
 
@@ -336,6 +373,7 @@ viewHexagrams ({ hexagram_height, hexagram_width } as model) =
         height_ =
             hexagram_height
                 * 8
+                |> (\a -> a - (hexagram_height // 4))
                 |> toString
                 |> height
     in
