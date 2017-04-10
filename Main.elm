@@ -265,6 +265,23 @@ map6tuple fn ( one, two, three, four, five, six ) =
     ( fn one, fn two, fn three, fn four, fn five, fn six )
 
 
+string2line : String -> Line
+string2line string =
+    case string of
+        "9" ->
+            Unbroken
+
+        "6" ->
+            Broken
+
+        unknown ->
+            let
+                _ =
+                    Debug.log "Expected either 6 ot 9, found" unknown
+            in
+                Broken
+
+
 {-| Converts a 6 tuple to a list, useful for converting a tuple that will be
 mapped over by a view function
 
@@ -283,23 +300,6 @@ mapped over by a view function
 listFrom6tuple : ( a, a, a, a, a, a ) -> List a
 listFrom6tuple ( one, two, three, four, five, six ) =
     [ one, two, three, four, five, six ]
-
-
-string2line : String -> Line
-string2line string =
-    case string of
-        "9" ->
-            Unbroken
-
-        "6" ->
-            Broken
-
-        unknown ->
-            let
-                _ =
-                    Debug.log "Expected either 6 ot 9, found" unknown
-            in
-                Broken
 
 
 
