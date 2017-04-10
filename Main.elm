@@ -1,9 +1,9 @@
 module Main exposing (..)
 
-import Html exposing (Html, text, program)
+import Html exposing (Html, program)
 import Json.Decode as Decode exposing (Decoder)
 import Svg exposing (Svg, svg, rect)
-import Svg.Attributes exposing (fill, width, height, viewBox, x, y)
+import Svg.Attributes exposing (fill, width, height, x, y)
 import Http
 import Window
 import Task
@@ -42,39 +42,11 @@ type alias IChing =
 type alias Model =
     { iChing : IChing
     , size : Window.Size
-    , bar_height : Int
-    , bar_width : Int
+    , line_height : Int
+    , line_width : Int
     , hexagram_height : Int
     , hexagram_width : Int
     }
-
-
-{-| The y-size of the bar
--}
-bar_height : Int
-bar_height =
-    10
-
-
-{-| The x-size of the bar
--}
-bar_width : Int
-bar_width =
-    bar_height * 6 * 2
-
-
-{-| The y-size of the hexagram
--}
-hexagram_height : Int
-hexagram_height =
-    bar_height * 2 * 8
-
-
-{-| The x-size of the hexagram
--}
-hexagram_width : Int
-hexagram_width =
-    bar_height * 2 * 8
 
 
 iChingURL : String
@@ -85,6 +57,22 @@ iChingURL =
 init : ( Model, Cmd Message )
 init =
     let
+        line_height : Int
+        line_height =
+            10
+
+        line_width : Int
+        line_width =
+            line_height * 2 * 6
+
+        hexagram_height : Int
+        hexagram_height =
+            line_height * 2 * 8
+
+        hexagram_width : Int
+        hexagram_width =
+            line_height * 2 * 8
+
         getIChing : Cmd Message
         getIChing =
             iChingDecoder
@@ -109,8 +97,8 @@ init =
         initialModel =
             { iChing = []
             , size = size
-            , bar_height = bar_height
-            , bar_width = bar_width
+            , line_height = line_height
+            , line_width = line_width
             , hexagram_height = hexagram_height
             , hexagram_width = hexagram_width
             }
@@ -152,6 +140,9 @@ apply a fn =
     fn a
 
 
+{-| Takes a result containing the decoded IChing and puts it into the model,
+logs the error if there is one
+-}
 receiveIChing : Result Http.Error IChing -> Model -> ( Model, Cmd Message )
 receiveIChing result model =
     case result of
@@ -166,11 +157,66 @@ receiveIChing result model =
                 model ! []
 
 
+{-| Takes the size and updates model sizes in order to resize rending to screen
+-}
 receiveSize : Window.Size -> Model -> ( Model, Cmd Message )
 receiveSize size model =
-    { model | size = size } ! []
+    let
+        _ =
+            Debug.log "new sizes"
+                ( newHexagramHeight
+                , newHexagramWidth
+                , newLineHeight
+                , newLineWidth
+                )
+
+        base_size =
+            if size.height > size.width then
+                size.width
+            else
+                size.height
+
+        ( newHexagramHeight, newHexagramWidth, newLineHeight, newLineWidth ) =
+            ( base_size // 8
+            , base_size // 8
+            , (base_size // 128)
+            , (base_size // 32) * 3
+            )
+    in
+        { model
+            | size =
+                size
+            , line_height = newLineHeight
+            , line_width = newLineWidth
+            , hexagram_height = newHexagramHeight
+            , hexagram_width = newHexagramWidth
+        }
+            ! []
 
 
+{-| Decodes some JSON that represents the I Ching.
+
+    exampleJSON : String
+    exampleJSON =
+        """
+    {
+        "hexagrams": {
+            "hexagram": [
+                {
+                    "pattern": "966696"
+                }
+            ]
+        }
+    }
+    """
+
+    -- Would be equal to [(Unbroken, Broken, Broken, Broken, Unbroken, Broken)]
+    exampleIChing : IChing
+    exampleIChing =
+        exampleJSON
+            |> Decode.decodeString iChingDecoder
+            |> Result.withDefault []
+-}
 iChingDecoder : Decoder IChing
 iChingDecoder =
     Decode.at [ "pattern" ] Decode.string
@@ -179,12 +225,21 @@ iChingDecoder =
         |> Decode.at [ "hexagrams", "hexagram" ]
 
 
+{-| Takes a string of length 6 containing "6" or "9" and returns a six tuple of
+Lines. Invalid patterns will log an error and return a default hexagram.
+
+    -- Equal to (Unbroken, Broken, Broken, Broken, Unbroken, Broken)
+    exampleHexagram : Hexagram
+    exampleHexagram =
+        pattern2hexagram "966696"
+
+-}
 pattern2hexagram : String -> Hexagram
 pattern2hexagram pattern =
     case String.split "" pattern of
         [ one, two, three, four, five, six ] ->
             ( one, two, three, four, five, six )
-                |> map6tuple string2bar
+                |> map6tuple string2line
 
         pattern ->
             let
@@ -194,18 +249,43 @@ pattern2hexagram pattern =
                 ( Broken, Broken, Broken, Broken, Broken, Broken )
 
 
+{-| Takes a function and applies it to each element of a 6 tuple
+
+    -- Would be equal to ("1", "2", "3", "4", "5", "6")
+    exampleTuple : (String, String, String, String, String, String)
+    exampleTuple =
+        (0, 1, 2, 3, 4, 5)
+            |> map6tuple ((+) 1)
+            |> map6tuple toString
+
+-}
 map6tuple : (a -> b) -> ( a, a, a, a, a, a ) -> ( b, b, b, b, b, b )
 map6tuple fn ( one, two, three, four, five, six ) =
     ( fn one, fn two, fn three, fn four, fn five, fn six )
 
 
+{-| Converts a 6 tuple to a list, useful for converting a tuple that will be
+mapped over by a view function
+
+
+    hexagram : Hexagram
+    hexagram =
+        ( Broken, Unbroken, Broken, Unbroken, Broken, Unbroken )
+
+    viewHexagram : List (Svg Message)
+    viewHexagram =
+        hexagram
+            |> listFrom6tuple
+            |> List.indexedMap viewLine
+
+-}
 listFrom6tuple : ( a, a, a, a, a, a ) -> List a
 listFrom6tuple ( one, two, three, four, five, six ) =
     [ one, two, three, four, five, six ]
 
 
-string2bar : String -> Line
-string2bar string =
+string2line : String -> Line
+string2line string =
     case string of
         "9" ->
             Unbroken
@@ -242,7 +322,7 @@ view model =
 
 
 viewHexagrams : Model -> Html Message
-viewHexagrams model =
+viewHexagrams ({ hexagram_height, hexagram_width } as model) =
     let
         width_ : Svg.Attribute Message
         width_ =
@@ -259,12 +339,12 @@ viewHexagrams model =
                 |> height
     in
         model.iChing
-            |> List.indexedMap viewHexagram
+            |> List.indexedMap (viewHexagram model)
             |> svg [ width_, height_ ]
 
 
-viewHexagram : Int -> Hexagram -> Svg Message
-viewHexagram position hexagram =
+viewHexagram : Model -> Int -> Hexagram -> Svg Message
+viewHexagram ({ hexagram_height, hexagram_width } as model) position hexagram =
     let
         x_ : Svg.Attribute Message
         x_ =
@@ -296,43 +376,43 @@ viewHexagram position hexagram =
     in
         hexagram
             |> listFrom6tuple
-            |> List.indexedMap viewLine
+            |> List.indexedMap (viewLine model)
             |> svg [ width_, height_, x_, y_ ]
 
 
-viewLine : Int -> Line -> Svg Message
-viewLine position bar =
+viewLine : Model -> Int -> Line -> Svg Message
+viewLine { line_height, line_width } position bar =
     let
         y_ : Svg.Attribute Message
         y_ =
             position
                 * 2
-                |> (*) bar_height
+                |> (*) line_height
                 |> toString
                 |> y
 
-        bar_height_ : Svg.Attribute Message
-        bar_height_ =
-            bar_height
+        line_height_ : Svg.Attribute Message
+        line_height_ =
+            line_height
                 |> toString
                 |> height
 
-        bar_width_ : Svg.Attribute Message
-        bar_width_ =
-            bar_width
+        line_width_ : Svg.Attribute Message
+        line_width_ =
+            line_width
                 |> toString
                 |> width
 
-        broken_bar_width : Svg.Attribute Message
-        broken_bar_width =
-            bar_width
+        broken_line_width : Svg.Attribute Message
+        broken_line_width =
+            line_width
                 // 3
                 |> toString
                 |> width
 
         x_offset : Svg.Attribute Message
         x_offset =
-            bar_width
+            line_width
                 // 3
                 |> (*) 2
                 |> toString
@@ -344,16 +424,16 @@ viewLine position bar =
 
         attributes : List (Svg.Attribute Message)
         attributes =
-            [ bar_height_, bar_width_, y_ ]
+            [ line_height_, line_width_, y_ ]
 
         bars : List (Svg Message)
         bars =
             if bar == Unbroken then
-                [ rect [ bar_width_, bar_height_, fill_ ] []
+                [ rect [ line_width_, line_height_, fill_ ] []
                 ]
             else
-                [ rect [ broken_bar_width, bar_height_, fill_ ] []
-                , rect [ broken_bar_width, bar_height_, fill_, x_offset ] []
+                [ rect [ broken_line_width, line_height_, fill_ ] []
+                , rect [ broken_line_width, line_height_, fill_, x_offset ] []
                 ]
     in
         svg attributes bars

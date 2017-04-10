@@ -9264,25 +9264,35 @@ var _user$project$Main$map6tuple = F2(
 	});
 var _user$project$Main$receiveSize = F2(
 	function (size, model) {
+		var base_size = (_elm_lang$core$Native_Utils.cmp(size.height, size.width) > 0) ? size.width : size.height;
+		var _p4 = {ctor: '_Tuple4', _0: (base_size / 8) | 0, _1: (base_size / 8) | 0, _2: (base_size / 128) | 0, _3: ((base_size / 32) | 0) * 3};
+		var newHexagramHeight = _p4._0;
+		var newHexagramWidth = _p4._1;
+		var newLineHeight = _p4._2;
+		var newLineWidth = _p4._3;
+		var _p5 = A2(
+			_elm_lang$core$Debug$log,
+			'new sizes',
+			{ctor: '_Tuple4', _0: newHexagramHeight, _1: newHexagramWidth, _2: newLineHeight, _3: newLineWidth});
 		return A2(
 			_elm_lang$core$Platform_Cmd_ops['!'],
 			_elm_lang$core$Native_Utils.update(
 				model,
-				{size: size}),
+				{size: size, line_height: newLineHeight, line_width: newLineWidth, hexagram_height: newHexagramHeight, hexagram_width: newHexagramWidth}),
 			{ctor: '[]'});
 	});
 var _user$project$Main$receiveIChing = F2(
 	function (result, model) {
-		var _p4 = result;
-		if (_p4.ctor === 'Ok') {
+		var _p6 = result;
+		if (_p6.ctor === 'Ok') {
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
 				_elm_lang$core$Native_Utils.update(
 					model,
-					{iChing: _p4._0}),
+					{iChing: _p6._0}),
 				{ctor: '[]'});
 		} else {
-			var _p5 = A2(_elm_lang$core$Debug$log, 'error fetching iChing', _p4._0);
+			var _p7 = A2(_elm_lang$core$Debug$log, 'error fetching iChing', _p6._0);
 			return A2(
 				_elm_lang$core$Platform_Cmd_ops['!'],
 				model,
@@ -9299,12 +9309,12 @@ var _user$project$Main$update = F2(
 			_user$project$Main$apply,
 			model,
 			function () {
-				var _p6 = message;
-				switch (_p6.ctor) {
+				var _p8 = message;
+				switch (_p8.ctor) {
 					case 'ReceiveIChing':
-						return _user$project$Main$receiveIChing(_p6._0);
+						return _user$project$Main$receiveIChing(_p8._0);
 					case 'ReceiveSize':
-						return _user$project$Main$receiveSize(_p6._0);
+						return _user$project$Main$receiveSize(_p8._0);
 					default:
 						return _elm_lang$core$Basics$always(
 							A2(
@@ -9315,17 +9325,16 @@ var _user$project$Main$update = F2(
 			}());
 	});
 var _user$project$Main$iChingURL = 'iching.json';
-var _user$project$Main$bar_height = 10;
-var _user$project$Main$bar_width = (_user$project$Main$bar_height * 6) * 2;
-var _user$project$Main$hexagram_height = (_user$project$Main$bar_height * 2) * 8;
-var _user$project$Main$hexagram_width = (_user$project$Main$bar_height * 2) * 8;
 var _user$project$Main$Model = F6(
 	function (a, b, c, d, e, f) {
-		return {iChing: a, size: b, bar_height: c, bar_width: d, hexagram_height: e, hexagram_width: f};
+		return {iChing: a, size: b, line_height: c, line_width: d, hexagram_height: e, hexagram_width: f};
 	});
 var _user$project$Main$Unbroken = {ctor: 'Unbroken'};
-var _user$project$Main$viewLine = F2(
-	function (position, bar) {
+var _user$project$Main$viewLine = F3(
+	function (_p9, position, bar) {
+		var _p10 = _p9;
+		var _p12 = _p10.line_width;
+		var _p11 = _p10.line_height;
 		var fill_ = _elm_lang$svg$Svg_Attributes$fill('black');
 		var x_offset = _elm_lang$svg$Svg_Attributes$x(
 			_elm_lang$core$Basics$toString(
@@ -9335,23 +9344,23 @@ var _user$project$Main$viewLine = F2(
 							return x * y;
 						}),
 					2,
-					(_user$project$Main$bar_width / 3) | 0)));
-		var broken_bar_width = _elm_lang$svg$Svg_Attributes$width(
-			_elm_lang$core$Basics$toString((_user$project$Main$bar_width / 3) | 0));
-		var bar_width_ = _elm_lang$svg$Svg_Attributes$width(
-			_elm_lang$core$Basics$toString(_user$project$Main$bar_width));
-		var bar_height_ = _elm_lang$svg$Svg_Attributes$height(
-			_elm_lang$core$Basics$toString(_user$project$Main$bar_height));
+					(_p12 / 3) | 0)));
+		var broken_line_width = _elm_lang$svg$Svg_Attributes$width(
+			_elm_lang$core$Basics$toString((_p12 / 3) | 0));
+		var line_width_ = _elm_lang$svg$Svg_Attributes$width(
+			_elm_lang$core$Basics$toString(_p12));
+		var line_height_ = _elm_lang$svg$Svg_Attributes$height(
+			_elm_lang$core$Basics$toString(_p11));
 		var bars = _elm_lang$core$Native_Utils.eq(bar, _user$project$Main$Unbroken) ? {
 			ctor: '::',
 			_0: A2(
 				_elm_lang$svg$Svg$rect,
 				{
 					ctor: '::',
-					_0: bar_width_,
+					_0: line_width_,
 					_1: {
 						ctor: '::',
-						_0: bar_height_,
+						_0: line_height_,
 						_1: {
 							ctor: '::',
 							_0: fill_,
@@ -9367,10 +9376,10 @@ var _user$project$Main$viewLine = F2(
 				_elm_lang$svg$Svg$rect,
 				{
 					ctor: '::',
-					_0: broken_bar_width,
+					_0: broken_line_width,
 					_1: {
 						ctor: '::',
-						_0: bar_height_,
+						_0: line_height_,
 						_1: {
 							ctor: '::',
 							_0: fill_,
@@ -9385,10 +9394,10 @@ var _user$project$Main$viewLine = F2(
 					_elm_lang$svg$Svg$rect,
 					{
 						ctor: '::',
-						_0: broken_bar_width,
+						_0: broken_line_width,
 						_1: {
 							ctor: '::',
-							_0: bar_height_,
+							_0: line_height_,
 							_1: {
 								ctor: '::',
 								_0: fill_,
@@ -9411,14 +9420,14 @@ var _user$project$Main$viewLine = F2(
 						function (x, y) {
 							return x * y;
 						}),
-					_user$project$Main$bar_height,
+					_p11,
 					position * 2)));
 		var attributes = {
 			ctor: '::',
-			_0: bar_height_,
+			_0: line_height_,
 			_1: {
 				ctor: '::',
-				_0: bar_width_,
+				_0: line_width_,
 				_1: {
 					ctor: '::',
 					_0: y_,
@@ -9428,12 +9437,15 @@ var _user$project$Main$viewLine = F2(
 		};
 		return A2(_elm_lang$svg$Svg$svg, attributes, bars);
 	});
-var _user$project$Main$viewHexagram = F2(
-	function (position, hexagram) {
+var _user$project$Main$viewHexagram = F3(
+	function (_p13, position, hexagram) {
+		var _p14 = _p13;
+		var _p16 = _p14.hexagram_width;
+		var _p15 = _p14.hexagram_height;
 		var height_ = _elm_lang$svg$Svg_Attributes$height(
-			_elm_lang$core$Basics$toString(_user$project$Main$hexagram_height));
+			_elm_lang$core$Basics$toString(_p15));
 		var width_ = _elm_lang$svg$Svg_Attributes$width(
-			_elm_lang$core$Basics$toString(_user$project$Main$hexagram_width));
+			_elm_lang$core$Basics$toString(_p16));
 		var y_ = _elm_lang$svg$Svg_Attributes$y(
 			_elm_lang$core$Basics$toString(
 				A2(
@@ -9441,7 +9453,7 @@ var _user$project$Main$viewHexagram = F2(
 						function (x, y) {
 							return x * y;
 						}),
-					_user$project$Main$hexagram_height,
+					_p15,
 					(position / 8) | 0)));
 		var x_ = _elm_lang$svg$Svg_Attributes$x(
 			_elm_lang$core$Basics$toString(
@@ -9450,7 +9462,7 @@ var _user$project$Main$viewHexagram = F2(
 						function (x, y) {
 							return x * y;
 						}),
-					_user$project$Main$hexagram_width,
+					_p16,
 					A2(_elm_lang$core$Basics_ops['%'], position, 8))));
 		return A2(
 			_elm_lang$svg$Svg$svg,
@@ -9473,14 +9485,16 @@ var _user$project$Main$viewHexagram = F2(
 			},
 			A2(
 				_elm_lang$core$List$indexedMap,
-				_user$project$Main$viewLine,
+				_user$project$Main$viewLine(_p14),
 				_user$project$Main$listFrom6tuple(hexagram)));
 	});
-var _user$project$Main$viewHexagrams = function (model) {
+var _user$project$Main$viewHexagrams = function (_p17) {
+	var _p18 = _p17;
+	var _p19 = _p18;
 	var height_ = _elm_lang$svg$Svg_Attributes$height(
-		_elm_lang$core$Basics$toString(_user$project$Main$hexagram_height * 8));
+		_elm_lang$core$Basics$toString(_p18.hexagram_height * 8));
 	var width_ = _elm_lang$svg$Svg_Attributes$width(
-		_elm_lang$core$Basics$toString(_user$project$Main$hexagram_width * 8));
+		_elm_lang$core$Basics$toString(_p18.hexagram_width * 8));
 	return A2(
 		_elm_lang$svg$Svg$svg,
 		{
@@ -9492,7 +9506,10 @@ var _user$project$Main$viewHexagrams = function (model) {
 				_1: {ctor: '[]'}
 			}
 		},
-		A2(_elm_lang$core$List$indexedMap, _user$project$Main$viewHexagram, model.iChing));
+		A2(
+			_elm_lang$core$List$indexedMap,
+			_user$project$Main$viewHexagram(_p19),
+			_p19.iChing));
 };
 var _user$project$Main$view = function (model) {
 	return A2(
@@ -9505,27 +9522,27 @@ var _user$project$Main$view = function (model) {
 		});
 };
 var _user$project$Main$Broken = {ctor: 'Broken'};
-var _user$project$Main$string2bar = function (string) {
-	var _p7 = string;
-	switch (_p7) {
+var _user$project$Main$string2line = function (string) {
+	var _p20 = string;
+	switch (_p20) {
 		case '9':
 			return _user$project$Main$Unbroken;
 		case '6':
 			return _user$project$Main$Broken;
 		default:
-			var _p8 = A2(_elm_lang$core$Debug$log, 'Expected either 6 ot 9, found', _p7);
+			var _p21 = A2(_elm_lang$core$Debug$log, 'Expected either 6 ot 9, found', _p20);
 			return _user$project$Main$Broken;
 	}
 };
 var _user$project$Main$pattern2hexagram = function (pattern) {
-	var _p9 = A2(_elm_lang$core$String$split, '', pattern);
-	if (((((((_p9.ctor === '::') && (_p9._1.ctor === '::')) && (_p9._1._1.ctor === '::')) && (_p9._1._1._1.ctor === '::')) && (_p9._1._1._1._1.ctor === '::')) && (_p9._1._1._1._1._1.ctor === '::')) && (_p9._1._1._1._1._1._1.ctor === '[]')) {
+	var _p22 = A2(_elm_lang$core$String$split, '', pattern);
+	if (((((((_p22.ctor === '::') && (_p22._1.ctor === '::')) && (_p22._1._1.ctor === '::')) && (_p22._1._1._1.ctor === '::')) && (_p22._1._1._1._1.ctor === '::')) && (_p22._1._1._1._1._1.ctor === '::')) && (_p22._1._1._1._1._1._1.ctor === '[]')) {
 		return A2(
 			_user$project$Main$map6tuple,
-			_user$project$Main$string2bar,
-			{ctor: '_Tuple6', _0: _p9._0, _1: _p9._1._0, _2: _p9._1._1._0, _3: _p9._1._1._1._0, _4: _p9._1._1._1._1._0, _5: _p9._1._1._1._1._1._0});
+			_user$project$Main$string2line,
+			{ctor: '_Tuple6', _0: _p22._0, _1: _p22._1._0, _2: _p22._1._1._0, _3: _p22._1._1._1._0, _4: _p22._1._1._1._1._0, _5: _p22._1._1._1._1._1._0});
 	} else {
-		var _p10 = A2(_elm_lang$core$Debug$log, 'Invalid pattern', _p9);
+		var _p23 = A2(_elm_lang$core$Debug$log, 'Invalid pattern', _p22);
 		return {ctor: '_Tuple6', _0: _user$project$Main$Broken, _1: _user$project$Main$Broken, _2: _user$project$Main$Broken, _3: _user$project$Main$Broken, _4: _user$project$Main$Broken, _5: _user$project$Main$Broken};
 	}
 };
@@ -9563,14 +9580,6 @@ var _user$project$Main$ReceiveIChing = function (a) {
 };
 var _user$project$Main$init = function () {
 	var size = {width: 0, height: 0};
-	var initialModel = {
-		iChing: {ctor: '[]'},
-		size: size,
-		bar_height: _user$project$Main$bar_height,
-		bar_width: _user$project$Main$bar_width,
-		hexagram_height: _user$project$Main$hexagram_height,
-		hexagram_width: _user$project$Main$hexagram_width
-	};
 	var getSize = A2(_elm_lang$core$Task$perform, _user$project$Main$ReceiveSize, _elm_lang$window$Window$size);
 	var getIChing = A2(
 		_elm_lang$http$Http$send,
@@ -9586,6 +9595,18 @@ var _user$project$Main$init = function () {
 				_1: {ctor: '[]'}
 			}
 		});
+	var line_height = 10;
+	var line_width = (line_height * 2) * 6;
+	var hexagram_height = (line_height * 2) * 8;
+	var hexagram_width = (line_height * 2) * 8;
+	var initialModel = {
+		iChing: {ctor: '[]'},
+		size: size,
+		line_height: line_height,
+		line_width: line_width,
+		hexagram_height: hexagram_height,
+		hexagram_width: hexagram_width
+	};
 	return {ctor: '_Tuple2', _0: initialModel, _1: effects};
 }();
 var _user$project$Main$main = _elm_lang$html$Html$program(
